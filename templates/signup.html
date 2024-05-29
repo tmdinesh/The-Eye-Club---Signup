@@ -1,0 +1,164 @@
+<!-- signup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <link rel="icon" href="static/theeyelogo.png" />
+    <title>Join Us | The Eye</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="https://account.samsung.com/accounts/v1/resources/one-ui/css/default.css">
+    <style type="text/css">
+        .logo-ui{
+            font-size: 30px!important;
+        }
+    </style>
+</head>
+<body class="one-card-ui ng-scope block-ui block-ui-anim-fade" block-ui="main" aria-busy="false">
+    <div class="wrapper ng-scope">
+        <header class="one-header">
+            <div class="header-inner">
+                <div class="logo">
+                    <h1><span class="logo-ui"><img style="height: 7vh;filter:unset;" src="static/theeyelogo.png"/></span></h1>
+                </div>
+            </div>
+        </header>
+        <main class="one-main new-login ng-scope" data-ng-controller="signInController as vm">
+            <div class="main-inner">
+                <div class="container">
+                    <div class="title">
+                        <h1>
+                            <span class="logo-ui"><img style="height: 13vh;" src="static/theeye-logo-gold.png" style="filter:unset;"/></span>
+                            <br/><br/>
+                            Join <i>The Eye</i> with eCampus
+                        </h1>
+                    </div>
+                    <div class="content">
+                        <div class="one-forms-login">
+                            <form novalidate="" autocomplete="off" class="ng-pristine ng-valid ng-valid-maxlength" method='POST' action="{{url_for('authenticate')}}">
+                                <fieldset>
+                                <style type="text/css">
+                                    input:focus{
+                                        color: white!important;
+                                    }
+                                </style>
+                                <div class="new-idform">
+                                    {% if err %}<p style="color:red">Invalid Credentials!</p>{% endif %}
+                                    <div id="ctnLgnPlnID" data-ng-if="true" class="one-input-container container-login ng-scope">
+                                        <label id="lblLgnPlnID" for="iptLgnPlnID">Roll Number</label>
+                                        <input spellcheck="false" aria-required="true" aria-invalid="false" aria-describedby="" maxlength="100" value="" name="userid" class="ng-pristine ng-valid ng-empty ng-valid-maxlength ng-touched" autocomplete="off">
+                                    </div>
+                                    <div id="ctnLgnPlnID" data-ng-if="true" class="one-input-container container-login ng-scope">
+                                        <label id="lblLgnPlnID" for="iptLgnPlnID">Password</label>
+                                        <input spellcheck="false" aria-required="true" aria-invalid="false" aria-describedby="" maxlength="100" value="" name="pwd" class="ng-pristine ng-valid ng-empty ng-valid-maxlength ng-touched" autocomplete="off" type="password">
+                                    </div>
+                                </div>
+                                <div class="mbr_signin">
+                                    <div class="one-btn-container">
+                                        <button class="one-primary one-button"
+                                            id="signInButton"
+                                            type="submit">
+                                        Sign Up
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="signin-tooltip">
+                                    <dl>
+                                        <dt>By logging in with eCampus, you consent to the retrieval and use of:</dt>
+                                        <dd>
+                                            1. Full Name<br/>
+                                            2. Roll Number<br/>
+                                            3. Year of Study<br/>
+                                            4. Programme<br/>
+                                            5. Profile Picture (will not be stored)<br/>
+                                            6. Phone Number
+                                        </dd>
+                                    </dl>
+                                    <br/><hr/><br/>
+                                    <dl>
+                                        <dt>Forgot Password?</dt>
+                                        <dd>Your log-in is authorized by <a href="https://ecampus.psgtech.ac.in/studzone2/" target="_blank">StudZone</a>.<br/><br/>If you are unable to log-in, please <a href="https://ecampus.psgtech.ac.in/studzone2/AttWfForgotPass.aspx" target="_blank">use the "Forgot Password" option</a> and reset your StudZone password.</dd>
+                                    </dl>
+                                    <!-- Hyperlink to admin login page -->
+                                    <p><a href="admin_login.html">Admin login</a></p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="one-footer" role="contentinfo">
+            <div class="footer-inner">
+                <div class="footer-logo"><img src="static/theeyelogo.png" onerror="this.src='static/theeyelogo.png';" alt="The Eye"></div>
+                <address class="footer-address">The Eye "Visio Protectoris" Club, Computer Science and Engineering Association. PSG College of Technology.</address>
+                <div class="footer-links" role="link">
+                    <a href="https://cseatheeye.com/" title="Open links in a new window The Eye" target="_blank">Homepage</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+        
+          inputEvent();
+          if ($('form').find(':input')[0] !== undefined) {
+            $(':focus').blur();
+            $('form').find(':input')[0].focus();
+          }
+        });
+        
+        var attributeObserver = new MutationObserver(function (mutations) {
+          mutations.forEach(function (mutation) {
+            if (mutation.target.className.includes('ng-not-empty')) {
+              var $input = $(mutation.target)
+              var $label = $input.parent('div.one-input-container')
+        
+              $label.addClass('active');
+              $label.siblings('div.flexbdy').addClass('off');
+            };
+          })
+        });
+        
+        var inputEvent = function () {
+          var $inputs = $('form').find(':input');
+          $inputs.each(function () {
+              var $input = $(this);
+              var $label = $input.parent('div.one-input-container');
+        
+              attributeObserver.observe($input.get(0), {
+                attributes: true,
+                attributeFilter: ['class'],
+                attributeOldValue: false,
+                characterData: false,
+                characterDataOldValue: false,
+                childList: false,
+                subtree: false
+              });
+        
+              if ($input.val()) {
+                $label.addClass('active');
+                $label.siblings('div.flexbdy').addClass('off');
+              }
+        
+              $input.focusin(function () {
+                $label.addClass('focus');
+                $label.siblings('div.flexbdy').addClass('off');
+              });
+        
+              $input.change(function () {
+                $label.addClass('active');
+              });
+        
+              $input.focusout(function () {
+                $label.removeClass('focus');
+        
+                if (!$input.val()) $label.removeClass('active').siblings('div.flexbdy').removeClass('off');
+              });
+            }
+          );
+        }
+    </script>
+</body>
+</html>

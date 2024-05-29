@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Profile</h1>
+        <form id="profileForm">
+            <label for="name">Name:</label>
+            <p>{{ name }}</p>
+            <label for="roll">Roll Number:</label>
+            <p>{{ roll }}</p>
+            <label for="department">Department:</label>
+            <p>{{ department }}</p>
+            <label for="year">Year:</label>
+            <p>{{ year }}</p>
+            <label for="phone">Phone Number:</label>
+            <p>{{ phone }}</p>
+            <label for="selected_option">Select Option:</label>
+            <select name="selected_option" id="selected_option">
+                <option value="cybersecurity">Cybersecurity</option>
+                <option value="web development">Web Development</option>
+                <option value="artificial intelligence">Artificial Intelligence</option>
+            </select>
+            <br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <script>
+        document.getElementById('profileForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get the selected option value
+            var selectedOption = document.getElementById('selected_option').value;
+
+            // Send JSON data to the server
+            fetch('/submit_option', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ selected_option: selectedOption })
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = 'success_message.html'; // Redirect to success message page
+                } else {
+                    return response.text().then(text => { throw new Error(text); });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred: ' + error.message);
+            });
+        });
+    </script>
+</body>
+</html>
